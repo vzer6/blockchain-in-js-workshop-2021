@@ -18,9 +18,12 @@ class Block {
      */
     isValid() {
         const str="0".repeat(DIFFICULTY)
-        return (this.nonce + "").startsWith(str)
+        this._setHash()
+        return this.hash.startsWith(str)
     }
-
+    _setHash(){
+        this.hash = sha256(this.nonce + this.previousHash+ this.height).toString()
+    }
     setNonce(nonce) {
             this.nonce = nonce
         }
@@ -31,6 +34,7 @@ class Block {
     getPreviousBlock() {
         return this.blockchain.blocks[this.previousHash]
     }
+   
 
 }
 
